@@ -16,8 +16,6 @@ else()
     set(INSTRUMENTA_LIB Instrumenta)
 endif()
 
-include_directories(src/Public)
-
 add_library(devswSTL SHARED
     src/Private/devswSTL.cpp
     src/Public/devswSTL.h
