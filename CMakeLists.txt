@@ -13,7 +13,6 @@ if (INSTRUMENTA_STANDALONE)
     include_directories(external/Instrumenta/src/Public)
     set(INSTRUMENTA_LIB Instrumenta)
 else()
-    find_package(Instrumenta REQUIRED)
     set(INSTRUMENTA_LIB Instrumenta)
 endif()
 
@@ -26,4 +25,4 @@ add_library(devswSTL SHARED
 
 target_link_libraries(devswSTL PRIVATE ${INSTRUMENTA_LIB})
 
-set_target_properties(devswSTL PROPERTIES FOLDER "STL")
+set_target_properties(devswSTL PROPERTIES FOLDER "Base")
