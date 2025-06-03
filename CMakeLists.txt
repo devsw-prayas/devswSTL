@@ -23,6 +23,10 @@ add_library(devswSTL SHARED
     src/Public/devswSTL.h
 )
 
+target_include_directories(devswSTL PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Public
+)
+
 target_link_libraries(devswSTL PRIVATE ${INSTRUMENTA_LIB})
 
 set_target_properties(devswSTL PROPERTIES FOLDER "Base")
