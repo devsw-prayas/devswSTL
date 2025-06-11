@@ -19,6 +19,10 @@ endif()
 add_library(devswSTL SHARED
     src/Private/devswSTL.cpp
     src/Public/devswSTL.h
+    src/Public/Traits.h src/Public/Allocators.h
+	src/Public/AVX.h
+	src/Public/AlignedVector.h src/Private/AlignedVector.cpp
+	src/Public/AvxIntrinsics.h
 )
 
 target_include_directories(devswSTL PUBLIC
