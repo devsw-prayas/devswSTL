@@ -1,11 +1,11 @@
 ﻿#pragma once
 
-#include "SpectraSTL.h"
+#include "devswSTL.h"
 #include <optional>
 
 namespace spectra::stl::abstraction{
     template<typename T, typename A>
-    class SPECTRA_STL Queue{
+    class devswSTL Queue{
         using item = T;
         using allocator = A;
 

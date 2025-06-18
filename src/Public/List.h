@@ -1,11 +1,11 @@
 #pragma once
 
-#include <SpectraSTL.h>
+#include "devswSTL.h"
 #include <optional>
 
-namespace spectra::stl::abstraction{
+namespace devsw::stl::abstraction{
     template<typename T, typename A>
-    class SPECTRA_STL List{
+    class devswSTL List{
         using allocator = A;
         using item = T;
 			

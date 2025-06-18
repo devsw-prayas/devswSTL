@@ -23,6 +23,7 @@ add_library(devswSTL SHARED
 	src/Public/AVX.h
 	src/Public/AlignedVector.h src/Private/AlignedVector.cpp
 	src/Public/AvxIntrinsics.h
+    src/Public/Memory.h
 )
 
 target_include_directories(devswSTL PUBLIC

@@ -2,7 +2,7 @@
 #include "devswSTL.h"
 #include <new>
 
-namespace spectra::stl {
+namespace devsw::stl {
 	template<typename T>
 	class devswSTL Allocator {
 		using value_type = T;

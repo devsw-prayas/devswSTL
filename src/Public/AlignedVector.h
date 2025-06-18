@@ -6,7 +6,7 @@
 
 namespace devsw::stl {
     template <typename T>
-    class SPECTRA_STL AlignedVector {
+    class devswSTL AlignedVector {
         static_assert(is_numeric_v<T>, "AlignedVector only supports floating point and integer types");
 
     public:

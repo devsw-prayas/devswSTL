@@ -5,7 +5,7 @@
 #include <memory>
 #include <cstdlib>
 
-namespace spectra::stl {
+namespace devsw::stl {
 	template<typename T>
 	constexpr void static_assert_valid_type() {
 		static_assert(!std::is_abstract_v<T>, "Cannot construct abstract type.");
