@@ -10,6 +10,7 @@ namespace devsw::stl {
 		Allocator() noexcept = default;
 		template<typename U>
 		Allocator(const Allocator<U>&) noexcept {}
+		virtual ~Allocator() noexcept = default;
 
 		virtual T* allocate(size_t n) {
 			void* p = ::operator new(n * sizeof(T), std::align_val_t{ 32 });
@@ -33,15 +34,10 @@ namespace devsw::stl {
 		struct rebind {
 			using other = Allocator<U>;
 		};
-
-#ifdef SPECTRA_DEBUG
-		size_t allocations = 0;
-		size_t deallocations = 0;
-#endif
 	};
 
 	template <typename T>
-	class devswSTL BlockAllocator : public Allocator<T> {
+	class devswSTL BlockAllocator final: public Allocator<T> {
 		static constexpr size_t BLOCK_SIZE = 64;
 		static constexpr size_t BLOCKS_PER_SLAB = 64;
 		struct Block {
@@ -76,7 +72,7 @@ namespace devsw::stl {
 			allocateSlab();
 		}
 
-		~BlockAllocator() noexcept {
+		~BlockAllocator() noexcept override {
 			while (slabs) {
 				Slab* next = slabs->next;
 				::operator delete(slabs, std::align_val_t{ 32 });
@@ -93,9 +89,7 @@ namespace devsw::stl {
 			}
 			Block* block = free_list;
 			free_list = free_list->next;
-#ifdef SPECTRA_DEBYG
-			this->allocations++;
-#endif
+
 			return &block->data;
 		}
 
@@ -106,14 +100,11 @@ namespace devsw::stl {
 			Block* block = reinterpret_cast<Block*>(p);
 			block->next = free_list;
 			free_list = block;
-#ifdef SPECTRA_DEBUG
-			this->deallocations++;
-#endif
 		}
 	};
 
 	template <typename T>
-	class StackAllocator : public Allocator<T> {
+	class StackAllocator final: public Allocator<T> {
 	private:
 		static constexpr size_t DEFAULT_CAPACITY = 1024;
 		uint8_t* buffer = nullptr;
@@ -126,7 +117,7 @@ namespace devsw::stl {
 			top = buffer;
 		}
 
-		~StackAllocator() noexcept {
+		~StackAllocator() noexcept override {
 			::operator delete(buffer, std::align_val_t{ 32 });
 		}
 
@@ -138,9 +129,6 @@ namespace devsw::stl {
 			}
 			T* result = reinterpret_cast<T*>(top);
 			top += aligned_bytes;
-#ifdef SPECTRA_DEBUG
-			this->allocations++;
-#endif
 			return result;
 		}
 
@@ -150,10 +138,6 @@ namespace devsw::stl {
 
 		void reset() noexcept {
 			top = buffer;
-#ifdef SPECTRA_DEBUG
-			this->deallocations += this->allocations;
-			this->allocations = 0;
-#endif
 		}
 
 		void* get_marker() const noexcept { return top; }
@@ -184,7 +168,7 @@ namespace devsw::stl {
 
 	public:
 		PoolAllocator() noexcept { init_pool(); }
-		~PoolAllocator() noexcept {
+		~PoolAllocator() noexcept override {
 			::operator delete(pool, std::align_val_t{ 32 });
 		}
 
@@ -193,9 +177,6 @@ namespace devsw::stl {
 			if (!free_list) throw std::bad_alloc();
 			Slot* slot = free_list;
 			free_list = slot->next;
-#ifdef SPECTRA_DEBUG
-			this->allocations++;
-#endif
 			return &slot->data;
 		}
 
@@ -204,9 +185,6 @@ namespace devsw::stl {
 			Slot* slot = reinterpret_cast<Slot*>(p);
 			slot->next = free_list;
 			free_list = slot;
-#ifdef SPECTRA_DEBUG
-			this->deallocations++;
-#endif
 		}
 	};
 }

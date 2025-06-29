@@ -62,7 +62,5 @@ namespace devsw::stl::abstraction{
         [[nodiscard]] virtual size_t maxSize() const = 0;
         [[nodiscard]] virtual bool empty() const = 0;
 
-        //Iterators
-        //TODO...
     }; 
 }

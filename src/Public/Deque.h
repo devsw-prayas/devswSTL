@@ -43,8 +43,5 @@ namespace devsw::stl::abstraction{
             return pushFront(item(std::forward<Args>(ags)...));
         }
 
-        //Iterators
-        //TODO...
-
     };
 }

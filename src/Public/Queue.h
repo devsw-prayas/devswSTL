@@ -3,7 +3,7 @@
 #include "devswSTL.h"
 #include <optional>
 
-namespace spectra::stl::abstraction{
+namespace devsw::stl::abstraction{
     template<typename T, typename A>
     class devswSTL Queue{
         using item = T;

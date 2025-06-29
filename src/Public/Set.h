@@ -24,6 +24,5 @@ namespace devsw::stl::abstraction{
             return insert(item(std::forward<Args>(args)...));
         }
 
-        //Iterators TODO....
     };
 }
